@@ -183,6 +183,7 @@ platform_check_image() {
 	zbt-wg3526|\
 	zbt-wr8305rt|\
 	zte-q7|\
+	ugn-puck-v5|\
 	youku-yk1)
 		[ "$magic" != "27051956" ] && {
 			echo "Invalid image type."

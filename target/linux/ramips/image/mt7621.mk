@@ -213,6 +213,13 @@ define Device/zbt-wg2626
 endef
 TARGET_DEVICES += zbt-wg2626
 
+define Device/ugn-puck-v5
+  DTS := UGN-PUCK-V5
+  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  DEVICE_TITLE := unGlue Puck v5
+endef
+TARGET_DEVICES += ugn-puck-v5
+
 define Device/zbt-wg3526
   DTS := ZBT-WG3526
   IMAGE_SIZE := $(ralink_default_fw_size_16M)

@@ -248,6 +248,9 @@ get_status_led() {
 	zbt-cpe102)
 		status_led="$board:green:4g-0"
 		;;
+	ugn-puck-v5)
+		status_led="$board:white:status"
+		;;
 	esac
 }
 

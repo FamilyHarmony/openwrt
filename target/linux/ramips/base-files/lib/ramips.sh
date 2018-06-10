@@ -652,6 +652,9 @@ ramips_board_detect() {
 	*"YK1")
 		name="youku-yk1"
 		;;
+	*"UGN-PUCK-V5")
+		name="ugn-puck-v5"
+		;;
 	*)
 		name="generic"
 		;;

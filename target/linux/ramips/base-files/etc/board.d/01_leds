@@ -347,6 +347,9 @@ wndr3700v5)
 wt3020)
 	ucidef_set_led_default "power" "power" "$board:blue:power" "0"
 	;;
+ugn-puck-v5)
+	ucidef_set_led_default "status" "status" "$board:white:status" "1"
+	;;
 y1)
 	set_usb_led "$board:blue:usb"
 	ucidef_set_led_netdev "wifi" "WIFI" "$board:blue:wifi" "wlan1"
