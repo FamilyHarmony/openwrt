@@ -1,0 +1,43 @@
+#!/bin/sh
+
+PLATFORM=$1
+
+# Debugging options
+cat > feeds.conf <<EOF
+src-git packages https://git.lede-project.org/feed/packages.git^cd5c448758f30868770b9ebf8b656c1a4211a240
+src-cpy unglue ../openwrt-unglue
+EOF
+
+if [ -d feeds ]; then
+	scripts/feeds update unglue
+else
+	scripts/feeds update -a
+fi
+
+#scripts/feeds install -p unglue libevent21
+#scripts/feeds install -p unglue libevent21-pthreads
+#scripts/feeds install -p unglue libevent21-openssl
+scripts/feeds install -a -p unglue
+
+echo "Configure for [$1]"
+# Platform
+cat config.*$PLATFORM* > .config
+
+# Debugging options
+cat >> .config <<EOF
+CONFIG_DEVEL=y
+CONFIG_CCACHE=y
+CONFIG_BUILD_LOG=y
+CONFIG_TARGET_ROOTFS_TARGZ=y
+EOF
+
+# Packages
+cat >> .config <<EOF
+CONFIG_PACKAGE_unglue=y
+EOF
+
+make defconfig Config.in
+
+make package/unglue/clean
+make package/base-files/clean
+make package/dropbear/clean

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+make V=s package/$1/{clean,configure,compile}

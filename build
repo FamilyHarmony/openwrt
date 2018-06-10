@@ -1,0 +1,49 @@
+#!/bin/sh
+
+PLATFORM=""
+THREADS=`nproc`
+VERBOSE=""
+FAST=0
+
+OPTIND=1
+while getopts "fhvt:p:" opt; do
+    case "$opt" in
+    h)
+        exit 0
+    ;;
+    v)
+        VERBOSE="V=s -j1"
+    ;;
+    t)
+        THREADS=$OPTARG
+    ;;
+    p)
+        PLATFORM=$OPTARG
+    ;;
+    f)
+        FAST=1
+    ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ "$PLATFORM" == "" ]; then
+	mkdir -p tmp
+	dialog --clear --backtitle "unGlue" --title "unGlue OpwnWrt Builder" --menu "Choose target:" \
+	15 60 0 \
+	ipq806x_R7800 "NETGEAR R7800" ramips_mt7620_miwifi-mini "Xiaomi Mi WiFi Mini" ramips_mt7621_ugn-puck-v5 "unGlue Puck v5" x86_unglue_VM "unGlue VM" x86_generic_Generic "Test x86 VM" \
+	2>tmp/build.target
+	PLATFORM=`cat tmp/build.target`
+	clear
+fi
+
+if [ "$PLATFORM" == "" ]; then
+	exit 1
+fi
+
+if [ $FAST != 0 ]; then
+    echo "Fast build"
+    ./configure $PLATFORM && make package/unglue/{clean,configure,compile} -j$THREADS $VERBOSE
+else
+    ./configure $PLATFORM && make -j$THREADS $VERBOSE
+fi
