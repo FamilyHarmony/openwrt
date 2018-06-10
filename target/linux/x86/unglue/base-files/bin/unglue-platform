@@ -1,0 +1,11 @@
+#!/bin/sh
+
+root=/unglue
+var=$root/var
+
+echo "unGlue: Platform bootstraping..." > /dev/kmsg
+mkdir -p $var
+block mount
+echo "unGlue: Platform complete" > /dev/kmsg
+
+exit 0
