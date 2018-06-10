@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# TODO!
+#source /lib/unglue
+
+# Migrate old VARs
+#if [ -f /etc/unglue.var/credentials.json ]; then
+#    mv /etc/unglue.var/credentials.json $UG_VAR/credentials.json
+#fi
+
+# TODO: Still needed?
+chmod 0700 /etc/dropbear
+chmod 0600 /etc/dropbear/*
+
+#passwd <<EOF
+#n6558632yr9um4fb3
+#n6558632yr9um4fb3
+#EOF
+
+uci set system.@system[0].hostname='unGlue'
+
+uci set dropbear.@dropbear[0].PasswordAuth='off'
+uci set dropbear.@dropbear[0].RootPasswordAuth='off'
+
+uci commit
+
+/etc/init.d/system restart
+/etc/init.d/dropbear restart
+
+exit 0

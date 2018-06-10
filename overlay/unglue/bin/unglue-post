@@ -1,0 +1,25 @@
+#!/bin/sh
+
+IFACE=`awk '$2 == 00000000 { print $1 }' /proc/net/route`
+RES=$?
+
+echo -n "unGlue: POST IFACE="
+if [ -z "$IFACE" ]; then
+	echo "No gateway interface! ($RES)"
+	echo "IFACE=$RES" >&2
+else
+	echo $IFACE
+fi
+
+MAC=`cat /sys/class/net/$IFACE/address | tr -d :`
+RES=$?
+
+echo -n "unGlue: POST MAC="
+if [ -z "$MAC" ]; then
+	echo "No MAC address for the gateway interface [$IFACE]! ($RES)"
+	echo "MAC=$RES" >&2
+else
+	echo $MAC
+fi
+
+exit 0;

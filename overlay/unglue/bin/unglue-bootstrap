@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#echo "unGlue: Setting up cron" > /dev/kmsg
+
+#echo "*/30 * * * * /bin/unglue-logrotate
+#*/1 * * * * /bin/unglue-send-diag" | crontab -
+
+#/etc/init.d/cron start
+##/etc/init.d/cron enable
+
+echo "unGlue: Running POST..." > /dev/kmsg
+
+/bin/unglue-post > /dev/kmsg 2 > /var/log/unglue-post.log
+res=$?
+
+echo "unGlue: POST complete ($res)" > /dev/kmsg
+
+echo "unGlue: IP" > /dev/kmsg
+ip address show scope global > /dev/kmsg
+
+exit 0
