@@ -2,12 +2,6 @@
 
 PLATFORM=$1
 
-# Debugging options
-cat > feeds.conf <<EOF
-src-git packages https://git.lede-project.org/feed/packages.git^cd5c448758f30868770b9ebf8b656c1a4211a240
-src-cpy unglue ../openwrt-unglue
-EOF
-
 if [ -d feeds ]; then
 	scripts/feeds update unglue
 else

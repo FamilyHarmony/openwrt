@@ -1,0 +1,26 @@
+#!/bin/sh
+
+mkdir -p ~/openwrt/build_dir
+mkdir -p ~/openwrt/staging_dir
+mkdir -p ~/openwrt/dl
+
+if [ -d build_dir ]; then
+	rm -df build_dir
+fi
+if [ -d staging_dir ]; then
+	rm -df staging_dir
+fi
+if [ -d dl ]; then
+	rm -df dl
+fi
+
+ln -s ~/openwrt/build_dir build_dir
+ln -s ~/openwrt/staging_dir staging_dir
+ln -s ~/openwrt/dl dl
+
+cat feeds.conf.default > feeds.conf
+cat >> feeds.conf <<EOF
+src-cpy unglue ../openwrt.unglue
+EOF
+
+./build $1 $2 $3 $4 $5
